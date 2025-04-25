@@ -1,0 +1,61 @@
+LOAD CSV WITH HEADERS FROM 'file:///student_performance.csv' AS row
+MERGE (s:Student_Performance {id: row.StudentID})
+MERGE (d:Student_Demographics {id: row.DemoID})
+MERGE (p:Parent_Info {id: row.ParentID})
+MERGE (sup:Support_Info {id: row.SupID})
+MERGE (f:Family_Environment {id: row.FamID})
+MERGE (alc:Alcohol_Consumption {id: row.AlcID})
+MERGE (h:Health_Info {id: row.HealthID})
+MERGE (fct:Student_Performance {studentID: row.StudentID, G1_x: toInteger(row.G1_x), G2_x: toInteger(row.G2_x), G3_x: toInteger(row.G3_x),
+                absences_x: toInteger(row.absences_x), failures_x: toInteger(row.failures_x), studytime_x: toInteger(row.studytime_x),
+                traveltime_x: toInteger(row.traveltime_x)})
+
+
+
+LOAD CSV WITH HEADERS FROM 'file:///student_demographics.csv' AS row
+MERGE (d:Student_Demographics {id: row.DemoID})
+SET d.school = row.school,
+    d.sex = row.sex,
+    d.age = toInteger(row.age),
+    d.address = row.address,
+    d.famsize = row.famsize,
+    d.Pstatus = row.Pstatus,
+    d.romantic_x = row.romantic_x
+
+
+LOAD CSV WITH HEADERS FROM 'file:///support_info.csv' AS row
+MERGE (sup:Support_Info {id: row.SupID})
+SET sup.schoolsup_x = row.schoolsup_x,
+    sup.famsup_x = row.famsup_x,
+    sup.paid_x = row.paid_x,
+    sup.activities_x = row.activities_x,
+    sup.nursery = row.nursery,
+    sup.higher_x = row.higher_x,
+    sup.internet = row.internet
+
+
+LOAD CSV WITH HEADERS FROM 'file:///parent_info.csv' AS row
+MERGE (p:Parent_Info {id: row.ParentID})
+SET p.Medu = toInteger(row.Medu),
+    p.Fedu = toInteger(row.Fedu),
+    p.Mjob = row.Mjob,
+    p.Fjob = row.Fjob,
+    p.guardian_x = row.guardian_x
+
+
+LOAD CSV WITH HEADERS FROM 'file:///health_info.csv' AS row
+MERGE (h:Health_Info {id: row.HealthID})
+SET h.health_x = row.health_x
+
+
+LOAD CSV WITH HEADERS FROM 'file:///family_environment.csv' AS row
+MERGE (f:Family_Environment {id: row.FamID})
+SET f.famrel_x = toInteger(row.famrel_x),  
+    f.freetime_x = toInteger(row.freetime_x), 
+    f.goout_x = toInteger(row.goout_x) 
+
+
+LOAD CSV WITH HEADERS FROM 'file:///alcohol_consumption.csv' AS row
+MERGE (alc:Alcohol_Consumption {id: row.AlcID})
+SET alc.Dalc_x = toInteger(row.Dalc_x),
+    alc.Walc_x = toInteger(row.Walc_x)
