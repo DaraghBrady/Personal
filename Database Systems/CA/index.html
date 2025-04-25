@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tech Supply</title>
+
+        <meta charset="UTF-8">
+
+         
+    </head>
+
+    <body>
+        <h1>Tech Supply</h1> 
+		
+		<h2>Add a Record</h2>
+
+        <label class="title">SELECT one Friend</label>
+        <form action="onefriend.php" method='post'>
+            <input type='submit' value='Search for friend based on Name' name='searchSomefriend' />
+            <input type="text" name="friendname" size="40" placeholder = "Enter a Friend Name" required />     
+        </form>
+			
+
+        <h2>Display all Records</h2>	
+
+        <label class="title">Select a Table</label><br />
+        <form action="allrecords.php" method='post'>
+            <input type='submit' value='Search for Table' name='searchSomeTable' />
+            <input type="text" name="tablename" size="40" placeholder = "Enter a Tables Name" required />     
+        </form><br />  
+
+        <h2>Search for Records</h2>	
+
+        <label class="title">SELECT some Friends</label>
+        <form action="somefriend_hobby.php" method='post'>
+            <input type='submit' value='Search for Friends based on Hobby' name='searchSomehobby' />
+            <input type="text" name="friendhobby" size="40" placeholder = "Enter a Hobby" required />     
+        </form>
+
+    </body>
+</html>

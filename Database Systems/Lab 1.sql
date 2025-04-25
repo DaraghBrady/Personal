@@ -1,0 +1,10 @@
+create table customers ( name varchar(20) );
+show tables;
+describe customers;
+insert into customers values ( 'John' );
+select * from customers;
+insert into customers values ( 'Mary' );
+select * from customers;
+delete  from customers;
+drop table customers;
+show tables; 

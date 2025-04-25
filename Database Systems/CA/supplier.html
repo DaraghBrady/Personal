@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Record to Supplier</title>
+
+        <meta charset="UTF-8">
+
+         
+    </head>
+
+    <body>
+        <h1>Tech Supply</h1> 
+		
+		<h2>Add a Record to Supplier</h2>
+
+        <label class="title">Supplier ID</label>
+        <form action="add_record_supplier.php" method='post'>
+            <input type='submit' value='Add Record' name='supplierID' />
+            <input type="text" name="supplierID" size="40" placeholder = "Enter the Supplier ID" required />     
+        </form>
+		
+        <label class="title">Supplier Name</label>
+        <form action="add_record_supplier.php" method='post'>
+            <input type='submit' value='Add Record' name='supplierName' />
+            <input type="text" name="supplierName" size="40" placeholder = "Enter the Supplier Name" required />     
+        </form>
+        
+        <label class="title">Supplier Address</label>
+        <form action="add_record_Supplier.php" method='post'>
+            <input type='submit' value='Add Record' name='supplierAddress' />
+            <input type="text" name="SupplierAddress" size="40" placeholder = "Enter the Supplier Address" required />     
+        </form>
+
+        <label class="title">Supplier Telephone Number</label>
+        <form action="add_record_Supplier.php" method='post'>
+            <input type='submit' value='Add Record' name='supplierTelephoneNumber' />
+            <input type="text" name="supplierTelephoneNumber" size="40" placeholder = "Enter the Supplier Telephone Number" required />     
+        </form>
+
+
+        <input type="button" onclick="window.location.href = 'index.html'" value="Home" />
+    </body>
+</html>

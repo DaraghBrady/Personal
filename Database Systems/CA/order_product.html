@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Record to Order/Product</title>
+
+        <meta charset="UTF-8">
+
+         
+    </head>
+
+    <body>
+        <h1>Tech Supply</h1> 
+		
+		<h2>Add a Record to Order/Product</h2>
+
+        <label class="title">Quantity Ordered</label>
+        <form action="add_record_orderproduct.php" method='post'>
+            <input type='submit' value='Add Record' name='quantityOrdered' />
+            <input type="text" name="quantityOrdered" size="40" placeholder = "Enter the Quantity Ordered" required />     
+        </form>
+
+        <label class="title">Order ID</label>
+        <form action="add_record_orderproduct.php" method='post'>
+            <input type='submit' value='Add Record' name='orderID' />
+            <input type="text" name="orderID" size="40" placeholder = "Enter the Order ID" required />     
+        </form>
+
+        <label class="title">Product ID</label>
+        <form action="add_record_orderproduct.php" method='post'>
+            <input type='submit' value='Add Record' name='productID' />
+            <input type="text" name="productID" size="40" placeholder = "Enter the Product ID" required />     
+        </form>
+	
+        <input type="button" onclick="window.location.href = 'index.html'" value="Home" />
+    </body>
+</html>
