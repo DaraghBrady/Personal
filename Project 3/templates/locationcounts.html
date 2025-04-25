@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>Job Counts by Location</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Job Counts by Location</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Job Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for location, count in job_counts.items() %}
+            <tr>
+                <td>{{ location }}</td>
+                <td>{{ count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

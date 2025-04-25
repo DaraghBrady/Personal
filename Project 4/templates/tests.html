@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Graph of AAPL</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Price and Volume Graphs</h1>
+    <ul>Max Price: {{ highest_price }}, Min Price: {{ lowest_price }},
+        Average Price: {{ last_price }}, Volume: {{ last_volume }}</ul>
+    <canvas id="myChart"></canvas>
+    <canvas id="volumeChart"></canvas>
+    
+    <script>
+        function drawPriceChart(aggregated_data) {
+            let labels = aggregated_data.map(item => item.time);
+            let range = aggregated_data.map(item => [item.min_price, item.max_price]);
+            let average_prices = aggregated_data.map(item => item.average_price);
+            
+            let ctx = document.getElementById('myChart').getContext('2d');
+            let myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Price Range',
+                        data: range,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                        fill: true
+                    },{
+                        label: 'Price',
+                        data: average_prices,
+                        type: 'line',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function drawVolumeChart(aggregated_data) {
+            let labels = aggregated_data.map(item => item.time);
+            let volume = aggregated_data.map(item => item.volume);
+            
+            let ctx = document.getElementById('volumeChart').getContext('2d');
+            let volumeChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Volume',
+                        data: volume,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        let aggregated_data = {{ aggregated_data | tojson }};
+        drawPriceChart(aggregated_data);
+        drawVolumeChart(aggregated_data);
+    </script>
+</body>
+</html>

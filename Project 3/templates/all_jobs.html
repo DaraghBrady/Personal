@@ -1,0 +1,42 @@
+<html>
+<head>
+    <title>Job Listings</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .job-table th, .job-table td {
+            border: 1px solid;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Job Listings</h1>
+    <table class="job-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Salary</th>
+                <th>Days Ago</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in job_listings %}
+            <tr>
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class='row border'>
+    {{scatter|safe}}
+</div>
+</body>
+</html>
