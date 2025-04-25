@@ -1,0 +1,11 @@
+Hourly Elements:
+
+ID	        ELEMENT                                                        Unit       
+
+rain		Precipitation Amount						mm
+temp       	Air Temperature 	                                        °C
+
+rhum		Relative Humidity						%
+wdsp		Mean Hourly Wind Speed						kt
+sun		Sunshine duration						hours
+vis		Visibility							m

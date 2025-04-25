@@ -1,0 +1,113 @@
+---
+title: "Joint Project"
+author: "Daragh Brady"
+date: "2024-04-03"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Predicting Energy Consumption
+
+```{r}
+hours=read.csv('C:/Users/darag/OneDrive/Documents/Statistics/Joint Project/hourly_dublin_17_18_19.csv')
+temperature=read.csv('C:/Users/darag/OneDrive/Documents/Statistics/Joint Project/JLHome1718Temperature.csv')
+power=read.csv('C:/Users/darag/OneDrive/Documents/Statistics/Joint Project/JLHome1718Power.csv')
+```
+Here I loaded in the documents.
+
+
+```{r}
+#install.packages(c("dplyr", "plyr", "readr"))
+library(dplyr)
+library(readr)
+merged_data <- full_join(hours, power, by = "date") %>%
+               full_join(temperature, by = "date")
+str(merged_data)
+```
+This is where I merged the files based on date. I had to install the necessary packages as well in order to do this.
+
+
+```{r}
+cleaned_data <- na.omit(merged_data)
+str(cleaned_data)
+```
+This is where I removed the rows where there are null values. I did this so the dates and other columns match with the different data on that date and time. As the hourly data started from the 1st of January 2017, and the electrical power and house temperature files dates only started on 12th of October.
+
+
+```{r}
+library(lubridate)
+
+cleaned_data$date <- as.Date(cleaned_data$date, format = "%d/%m/%Y %H:%M")
+
+daily_averages <- cleaned_data %>%
+    group_by(date = as.Date(date)) %>%
+    summarize(across(where(is.numeric), mean, na.rm = TRUE))
+
+daily_sums <- cleaned_data %>%
+    group_by(date = as.Date(date)) %>%
+    summarize(s.rain = sum(rain, na.rm = TRUE),
+              s.sun = sum(sun, na.rm = TRUE))
+
+```
+Here I cleaned the data more as I converted the data into a single day, changing the hourly results into a daily average by finding the mean. However, for the rain and sunlight columns I added each hour of the day so it is a total for that day.
+
+```{r}
+combined_data <- full_join(daily_averages, daily_sums, by = "date")
+mydata <- select(combined_data, -rain, -sun)
+str(mydata)
+write.csv(mydata, file = "C:/Users/darag/OneDrive/Documents/Statistics/Joint Project/mydata.csv", row.names = FALSE)
+```
+I then removed the rain and sun columns from my data set where it was giving me the average rain and sunlight per day.
+
+```{r}
+pairs(mydata, panel=panel.smooth)
+```
+Here I used the pairs command to get an understanding of the different potential factors in the data set.
+
+
+```{r}
+boxplot(mydata$elpower, ylab='Electrical Power')
+
+plot(mydata$houtemp, mydata$elpower,
+     xlab="House Temperature", ylab = "Electric Power")
+
+plot(mydata$temp, mydata$elpower,
+     xlab="Air Temperature", ylab = "Electric Power")
+
+cor1=cor(mydata$elpower, mydata$houtemp)
+cor2=cor(mydata$elpower, mydata$temp)
+cat("Temperature correlation (house temperature):", cor1, "\n")
+cat("Temperature correlation (air temperature):", cor2)
+```
+This is how I got a better understanding of what I thought to be the most important factors.
+
+```{r}
+summary(mydata)
+```
+These were the summary statistics of each column.
+
+```{r}
+model=lm(elpower~temp+rhum+wdsp+vis+houtemp+s.rain+s.sun, data=mydata)
+summary(model)
+par(mfrow=c(2,2))
+plot(model)
+```
+This was the first linear model that I created. I used all the variables to see their coeffiecients with the response variable.
+```{r}
+slr=lm(elpower~temp, data=mydata)
+summary(slr)
+par(mfrow=c(2,2))
+plot(slr)
+```
+I chose for the simple linear regression to pick the temperature with the response variable of power. I found that for every degree the air temperature increases the electrical power decreases by 8.8.
+```{r}
+mlr=lm(log(elpower)~temp+houtemp+s.sun, data=mydata)
+summary(mlr)
+par(mfrow=c(2,2))
+plot(mlr)
+```
+This is what I found to be the best model, as it meets the expectations of the different graphs and the p values are very low which shows they are very significant in predicting the electrical power.

@@ -1,0 +1,45 @@
+//This is the MongoDB queries that I ran to clean and find different information.
+
+db.Hourly.aggregate([
+  { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } }, avg_temperature: { $avg: "$temp" } } },
+  { $sort: { _id: 1 } }
+])
+
+db.Temperature.aggregate([
+  { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } }, avg_temperature: { $avg: "$houtemp" } } },
+  { $sort: { _id: 1 } }
+])
+
+db.Power.aggregate([
+  { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } }, avg_power: { $avg: "$elpower" } } },
+  { $sort: { _id: 1 } }
+])
+
+db.createUser({
+    user: "myuser",
+    pwd: "mypassword",
+    roles: [
+        { role: "userAdmin", db: "admin" },
+        { role: "readWrite", db: "DBproject" }
+    ]
+});
+
+//These are the SQL queries that I ran to find insightful analysis for the dataset.
+
+SELECT date, elpower, wdsp FROM mydata WHERE temp > 17;
+
+SELECT DATE_FORMAT(date, '%Y-%m') AS Month, AVG(houtemp) AS AvgHouseTemp, AVG(elpower) AS AvgElePower FROM mydata GROUP BY Month ORDER BY Month;
+
+SELECT DATE_FORMAT(date, '%Y-%m') AS Month, AVG(temp) AS AvgAirTemp FROM mydata GROUP BY Month ORDER BY Month;
+
+CREATE USER 'secondary'@'localhost' IDENTIFIED BY 'mypassword';
+GRANT ALL PRIVILEGES ON *.* TO 'secondary'@'localhost';
+
+
+
+
+
+
+
+
+
