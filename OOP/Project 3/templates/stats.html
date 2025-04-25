@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>Salary Statistics</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Salary Statistics</h2>
+    These are the statistics for the salary data where 'Salary not specified has been removed'
+    <table>
+        <tr>
+            <th>Statistic</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Total Count</td>
+            <td>{{ total_count }}</td>
+        </tr>
+        <tr>
+            <td>Average Salary</td>
+            <td>€{{ average_salary }}</td>
+        </tr>
+        <tr>
+            <td>Minimum Salary</td>
+            <td>€{{ min_salary }}</td>
+        </tr>
+        <tr>
+            <td>Maximum Salary</td>
+            <td>€{{ max_salary }}</td>
+        </tr>
+    </table>
+</body>
+</html>
